@@ -207,7 +207,14 @@
 				author: announcement.author,
 				authorId: announcement.author_id,
 				subject: announcement.subject,
-				message: announcement.message,
+				message: announcement.message
+					.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+					.replace(/\**\*/g, '<i>*</i>')
+					.replace(/_*_/g, '<u>*</u>')
+					.replace(/\*\**\*\*/g, '<b>*</b>')
+					.replace(/>*\n/g, '<blockquote>*</blockquote>')
+					.replace(/[*](*)/g, '<a href=*>*</a>')
+					.replace(/![*](*)/g, ' <img src=* alt=*> '),
 				comments: (announcement.comments !== false) ? n('announcementcenter', '%n comment', '%n comments', announcement.comments) : false,
 				num_comments: (announcement.comments !== false) ? announcement.comments : false,
 				hasNotifications: announcement.notifications,
